@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "shared-library-kotlin"
+
