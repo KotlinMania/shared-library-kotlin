@@ -5,6 +5,8 @@ package io.github.kotlinmania.sharedlibrary
  * Module ledger and loader helper for shared libraries ported from upstream lib.rs.
  */
 public object Lib {
+    public const val VERSION: String = "0.1.9"
+
     /**
      * Tries to open the dynamic library at [path].
      *
