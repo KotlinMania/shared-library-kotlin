@@ -5,10 +5,10 @@ Based on AST analysis, here are the concrete next steps.
 ## Summary
 
 - **Files Present:** 2/2 (100.0%)
-- **Function parity:** 15/15 matched (target 73) — 100.0%
-- **Class/type parity:** 3/3 matched (target 9) — 100.0%
-- **Combined symbol parity:** 18/18 matched (target 82) — 100.0%
-- **Average inline-code cosine:** 0.24 (function body across 2 matched files)
+- **Function parity:** 15/15 matched (target 25) — 100.0%
+- **Class/type parity:** 3/3 matched (target 10) — 100.0%
+- **Combined symbol parity:** 18/18 matched (target 35) — 100.0%
+- **Average inline-code cosine:** 0.16 (function body across 2 matched files)
 - **Average documentation cosine:** 0.18 (doc text across 2 matched files)
 - **Cheat-zeroed Files:** 1
 - **Critical Issues:** 2 files with <0.60 function similarity
@@ -30,10 +30,10 @@ Every matched file is listed below with function and type symbol parity.
 ### 1. dynamic_library
 
 - **Target:** `sharedlibrary.PlatformDylib`
-- **Similarity:** 0.48
+- **Similarity:** 0.31
 - **Dependents:** 0
-- **Priority Score:** 1705.2
-- **Functions:** 15/15 matched (target 71)
+- **Priority Score:** 1706.9
+- **Functions:** 15/15 matched (target 21)
 - **Missing functions:** _none_
 - **Types:** 2/2 matched (target 4)
 - **Missing types:** _none_
@@ -45,9 +45,9 @@ Every matched file is listed below with function and type symbol parity.
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 110.0
-- **Functions:** 0/0 matched (target 2)
+- **Functions:** 0/0 matched (target 4)
 - **Missing functions:** _none_
-- **Types:** 1/1 matched (target 5)
+- **Types:** 1/1 matched (target 6)
 - **Missing types:** _none_
 
 ## Success Criteria
