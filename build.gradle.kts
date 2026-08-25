@@ -884,26 +884,6 @@ val publishToCentralPortal by tasks.registering {
 // Tasks
 // ============================================================================
 
-// Patch generated SPM Package.swift to include minimum macOS platform for Swift Concurrency
-tasks.matching { it.name.contains("GenerateSPMPackage") }.configureEach {
-    doLast {
-        val spmDir = layout.buildDirectory.dir("SPMPackage").orNull?.asFile
-        if (spmDir != null && spmDir.exists()) {
-            spmDir.walkTopDown().filter { it.name == "Package.swift" }.forEach { file ->
-                val text = file.readText()
-                if (!text.contains("platforms:")) {
-                    file.writeText(
-                        text.replaceFirst(
-                            Regex("""(let package = Package\s*\(\s*name:\s*"[^"]*",)"""),
-                            "$1\n    platforms: [.macOS(.v14)],",
-                        ),
-                    )
-                }
-            }
-        }
-    }
-}
-
 // Exact test lifecycle task. Without this, ./gradlew test is ambiguous between
 // Android test task names. This runs commonTest through the KMP allTests
 // lifecycle and adds the Android host + Swift Export parity tests.
@@ -934,6 +914,26 @@ tasks.register("hostTests") {
         "wasmWasiNodeTest",
         "testAndroidHostTest",
     )
+}
+
+// Patch generated SPM Package.swift to include minimum macOS platform for Swift Concurrency
+tasks.matching { it.name.contains("GenerateSPMPackage") }.configureEach {
+    doLast {
+        val spmDir = layout.buildDirectory.dir("SPMPackage").orNull?.asFile
+        if (spmDir != null && spmDir.exists()) {
+            spmDir.walkTopDown().filter { it.name == "Package.swift" }.forEach { file ->
+                val text = file.readText()
+                if (!text.contains("platforms:")) {
+                    file.writeText(
+                        text.replaceFirst(
+                            Regex("""(let package = Package\s*\(\s*name:\s*"[^"]*",)"""),
+                            "$1\n    platforms: [.macOS(.v14)],",
+                        ),
+                    )
+                }
+            }
+        }
+    }
 }
 
 // Swift Export smoke test — produces the SPM package via embedSwiftExportForXcode
@@ -977,23 +977,6 @@ tasks.register("swiftExportSmokeTest") {
                     ),
                 )
             }.assertNormalExitValue()
-
-        val generatedPackageSwift =
-            layout.buildDirectory
-                .file("SPMPackage/macosArm64/Debug/Package.swift")
-                .get()
-                .asFile
-        if (generatedPackageSwift.exists()) {
-            val text = generatedPackageSwift.readText()
-            if (!text.contains("platforms:")) {
-                generatedPackageSwift.writeText(
-                    text.replaceFirst(
-                        Regex("(name:\\s*\"[^\"]*\",)"),
-                        "\$1\n    platforms: [.macOS(.v14)],",
-                    ),
-                )
-            }
-        }
 
         execOperations
             .exec {
