@@ -495,7 +495,6 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.findLibrary("kotlinx-coroutines-test").get())
         }
         val posixMain = maybeCreate("posixMain")
         findByName("nativeMain")?.let { posixMain.dependsOn(it) } ?: posixMain.dependsOn(commonMain.get())
