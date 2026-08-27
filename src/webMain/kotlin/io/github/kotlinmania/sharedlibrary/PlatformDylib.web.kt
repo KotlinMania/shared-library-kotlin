@@ -18,13 +18,9 @@ internal actual object PlatformDylib {
         return Result.failure(LoadingError.SymbolNotFound(symbol))
     }
 
-    actual fun symbolSpecial(handle: SpecialHandles, symbol: String): Result<Long> {
-        return symbol(1L, symbol)
-    }
+    actual fun symbolSpecial(handle: SpecialHandles, symbol: String): Result<Long> = symbol(1L, symbol)
 
-    actual fun close(handle: Long): Result<Unit> {
-        return Result.success(Unit)
-    }
+    actual fun close(handle: Long): Result<Unit> = Result.success(Unit)
 
     actual fun envvar(): String = "LD_LIBRARY_PATH"
 

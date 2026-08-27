@@ -1,17 +1,29 @@
 // port-lint: source shared_library/src/dynamic_library.rs
 package io.github.kotlinmania.sharedlibrary
 
-import kotlinx.cinterop.*
-import platform.windows.*
+import kotlinx.cinterop.COpaque
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.NativePtr
+import kotlinx.cinterop.interpretCPointer
+import kotlinx.cinterop.plus
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.toKString
+import platform.windows.FreeLibrary
+import platform.windows.GetLastError
+import platform.windows.GetModuleHandleW
+import platform.windows.GetProcAddress
+import platform.windows.LoadLibraryW
+import platform.windows.SetEnvironmentVariableW
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual object PlatformDylib {
     actual fun open(filename: String?): Result<Long> {
-        val handle = if (filename != null) {
-            LoadLibraryW(filename)
-        } else {
-            GetModuleHandleW(null)
-        }
+        val handle =
+            if (filename != null) {
+                LoadLibraryW(filename)
+            } else {
+                GetModuleHandleW(null)
+            }
         if (handle == null) {
             val errCode = GetLastError()
             return Result.failure(LoadingError.LibraryNotFound("Windows error code $errCode opening $filename"))
@@ -29,9 +41,7 @@ internal actual object PlatformDylib {
         return Result.success(sym.rawValue.toLong())
     }
 
-    actual fun symbolSpecial(handle: SpecialHandles, symbol: String): Result<Long> {
-        return Result.failure(LoadingError.SymbolNotFound(symbol))
-    }
+    actual fun symbolSpecial(handle: SpecialHandles, symbol: String): Result<Long> = Result.failure(LoadingError.SymbolNotFound(symbol))
 
     actual fun close(handle: Long): Result<Unit> {
         val ptr = interpretCPointer<COpaque>(handle.toNativePtr())
