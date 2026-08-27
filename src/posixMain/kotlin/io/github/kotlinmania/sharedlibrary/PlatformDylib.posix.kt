@@ -1,18 +1,32 @@
 // port-lint: source shared_library/src/dynamic_library.rs
 package io.github.kotlinmania.sharedlibrary
 
-import kotlinx.cinterop.*
-import platform.posix.*
+import kotlinx.cinterop.COpaque
+import kotlinx.cinterop.CPointed
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.NativePtr
+import kotlinx.cinterop.interpretCPointer
+import kotlinx.cinterop.plus
+import kotlinx.cinterop.toKString
+import platform.posix.RTLD_LAZY
+import platform.posix.dlclose
+import platform.posix.dlerror
+import platform.posix.dlopen
+import platform.posix.dlsym
+import platform.posix.getenv
+import platform.posix.setenv
 import kotlin.experimental.ExperimentalNativeApi
 
 @OptIn(ExperimentalForeignApi::class, ExperimentalNativeApi::class)
 internal actual object PlatformDylib {
     actual fun open(filename: String?): Result<Long> {
-        val handle = if (filename != null) {
-            dlopen(filename, RTLD_LAZY)
-        } else {
-            dlopen(null, RTLD_LAZY)
-        }
+        val handle =
+            if (filename != null) {
+                dlopen(filename, RTLD_LAZY)
+            } else {
+                dlopen(null, RTLD_LAZY)
+            }
         if (handle == null) {
             val err = dlerror()?.toKString() ?: "Unknown error opening library $filename"
             return Result.failure(LoadingError.LibraryNotFound(err))
@@ -31,10 +45,11 @@ internal actual object PlatformDylib {
     }
 
     actual fun symbolSpecial(handle: SpecialHandles, symbol: String): Result<Long> {
-        val targetHandle: CPointer<out CPointed>? = when (handle) {
-            SpecialHandles.Next -> interpretCPointer<COpaque>((-1L).toNativePtr())
-            SpecialHandles.Default -> null
-        }
+        val targetHandle: CPointer<out CPointed>? =
+            when (handle) {
+                SpecialHandles.Next -> interpretCPointer<COpaque>((-1L).toNativePtr())
+                SpecialHandles.Default -> null
+            }
         val sym = dlsym(targetHandle, symbol)
         if (sym == null) {
             val err = dlerror()?.toKString() ?: "Special symbol $symbol not found"
@@ -53,10 +68,11 @@ internal actual object PlatformDylib {
         return Result.success(Unit)
     }
 
-    actual fun envvar(): String = when (Platform.osFamily) {
-        OsFamily.MACOSX, OsFamily.IOS, OsFamily.TVOS, OsFamily.WATCHOS -> "DYLD_LIBRARY_PATH"
-        else -> "LD_LIBRARY_PATH"
-    }
+    actual fun envvar(): String =
+        when (Platform.osFamily) {
+            OsFamily.MACOSX, OsFamily.IOS, OsFamily.TVOS, OsFamily.WATCHOS -> "DYLD_LIBRARY_PATH"
+            else -> "LD_LIBRARY_PATH"
+        }
 
     actual fun separator(): String = ":"
 

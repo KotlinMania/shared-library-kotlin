@@ -10,7 +10,6 @@ public class DynamicLibrary internal constructor(
     public val handle: Long,
     public val filename: String? = null,
 ) : AutoCloseable {
-
     private var closed: Boolean = false
 
     /**
