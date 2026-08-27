@@ -1,3 +1,4 @@
+// port-lint: source shared_library/src/dynamic_library.rs
 package io.github.kotlinmania.sharedlibrary
 
 internal expect object PlatformDylib {
