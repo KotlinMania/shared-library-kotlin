@@ -1,4 +1,4 @@
-// port-lint: tests dynamic_library.rs
+// port-lint: tests shared_library/src/dynamic_library.rs
 package io.github.kotlinmania.sharedlibrary
 
 import kotlin.test.Test
