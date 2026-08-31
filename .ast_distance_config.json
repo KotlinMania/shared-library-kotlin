@@ -2,7 +2,7 @@
   "type": "port",
   "name": "shared-library-kotlin",
   "source": {
-    "path": "tmp/shared_library/src",
+    "path": "tmp",
     "lang": "rust"
   },
   "target": {
