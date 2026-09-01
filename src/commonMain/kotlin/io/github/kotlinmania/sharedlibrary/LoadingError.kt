@@ -1,4 +1,4 @@
-// port-lint: source shared_library/src/lib.rs
+// port-lint: source lib.rs
 package io.github.kotlinmania.sharedlibrary
 
 /**
