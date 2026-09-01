@@ -27,9 +27,9 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. dynamic_library
+### 1. shared_library.dynamic_library
 
-- **Target:** `sharedlibrary.PlatformDylib [PROVENANCE-FALLBACK]`
+- **Target:** `sharedlibrary.PlatformDylib`
 - **Similarity:** 0.31
 - **Dependents:** 0
 - **Priority Score:** 1706.9
@@ -38,15 +38,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/2 matched (target 4)
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `shared_library/src/dynamic_library.rs` vs expected `dynamic_library.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `shared_library/src/dynamic_library.rs` vs expected `dynamic_library.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `shared_library/src/dynamic_library.rs` vs expected `dynamic_library.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:shared_library/src/dynamic_library.rs` vs expected `dynamic_library.rs`
-- **Proposed provenance header:** `// port-lint: source dynamic_library.rs` (current: `// port-lint: source shared_library/src/dynamic_library.rs`)
-- **Proposed provenance header:** `// port-lint: source dynamic_library.rs` (current: `// port-lint: source shared_library/src/dynamic_library.rs`)
-- **Proposed provenance header:** `// port-lint: source dynamic_library.rs` (current: `// port-lint: source shared_library/src/dynamic_library.rs`)
-- **Proposed provenance header:** `// port-lint: tests dynamic_library.rs` (current: `// port-lint: tests shared_library/src/dynamic_library.rs`)
-- **Lint issues:** 4
 
 ## Success Criteria
 
@@ -68,5 +59,5 @@ do not treat them as the next implementation target by default.
 
 | Source | Target | Path |
 |--------|--------|------|
-| `lib` | `sharedlibrary.Lib` | `lib` |
+| `shared_library.lib` | `sharedlibrary.Lib` | `shared_library/src/lib` |
 
