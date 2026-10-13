@@ -6,9 +6,6 @@
 config:
   validation: true
 
-console-reports:
-  active: false
-
 processors:
   active: true
 
@@ -30,7 +27,8 @@ performance:
 style:
   active: true
   MagicNumber: { active: false }
-  NewLineAtEndOfFile: { active: true }
+  NewLineAtEndOfFile: { active: false }
+  MayBeConstant: { active: false }
   ReturnCount: { active: false }
   UnusedImport: { active: true }
   UnnecessaryInheritance: { active: true }
@@ -49,6 +47,7 @@ style:
   ModifierOrder: { active: false }
   UnusedPrivateProperty: { active: false }
   RedundantVisibilityModifier: { active: false }
+  AbstractClassCanBeInterface: { active: false }
 
 complexity:
   active: true
@@ -71,7 +70,6 @@ empty-blocks:
   EmptyFunctionBlock: { active: false }
   EmptyIfBlock: { active: false }
   EmptyInitBlock: { active: true }
-  EmptyKotlinFile: { active: true }
   EmptySecondaryConstructor: { active: true }
   EmptyTryBlock: { active: true }
   EmptyWhenBlock: { active: true }
@@ -88,6 +86,7 @@ naming:
   FunctionParameterNaming: { active: false }
   MatchingDeclarationName: { active: false }
   ObjectPropertyNaming: { active: false }
+  MemberNameEqualsClassName: { active: false }
 
 exceptions:
   active: true
